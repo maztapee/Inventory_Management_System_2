@@ -10,7 +10,7 @@ import {
 import { Category } from "./category.entity";
 import { IsNotEmpty } from "class-validator";
 
-@Entity()
+@Entity("products")
 export class Item extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -18,6 +18,30 @@ export class Item extends BaseEntity {
   @Column()
   @IsNotEmpty()
   name: string;
+
+  @Column({ type: "int", nullable: false, default: 0 })
+  quantity: number;
+
+  @Column("simple-array", { default: ["No image available"] }) // Product images
+  images: string[];
+
+  @Column({ type: "float", default: 0 })
+  unitPrice: number;
+
+  @Column({ type: "boolean", default: false }) // Indicator for product availability
+  available: boolean;
+
+  @Column({ default: 0 }) // For discounted sales or clearouts 
+  discount: number; 
+
+  @Column({ nullable: false, default: "No description added" }) // Product description
+  description: string;
+
+  @Column("simple-array", { default: ["Features will be added soon"] }) // Product features
+  features: string[];
+
+  @Column({ type: "int", nullable: false }) // ID of the user/admin who added this product
+  addedBy: number;
 
   @ManyToOne(() => Category, (Category) => Category.item, {
     onDelete: "SET NULL",
@@ -27,3 +51,6 @@ export class Item extends BaseEntity {
   @OneToMany(() => ItemRoom, (itemRoom) => itemRoom.item)
   itemRoom: ItemRoom[];
 }
+
+
+//NOTE: Item entity is created to represents product. Will change to product across code base in the future

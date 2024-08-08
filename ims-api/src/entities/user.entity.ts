@@ -16,7 +16,8 @@ import * as bcrypt from "bcrypt";
 
 import { IsNotEmpty, IsEmail, Matches, IsPhoneNumber } from "class-validator";
 
-@Entity()
+@Entity()                 
+// TODO: Rename table to users and other tables names in plural forms
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;

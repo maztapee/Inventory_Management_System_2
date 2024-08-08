@@ -14,11 +14,11 @@ export const createItem = async (req: Request, res: Response) => {
       message: `category with id ${categoryId} not found`,
     });
   }
-  if (exist) {
-    return res.status(400).json({
-      message: `item with name ${name} already exist`,
-    });
-  }
+  // if (exist) {
+  //   return res.status(400).json({
+  //     message: `item with name ${name} already exist`,
+  //   });
+  // }
   try {
     const item = new Item();
     item.name = name;
