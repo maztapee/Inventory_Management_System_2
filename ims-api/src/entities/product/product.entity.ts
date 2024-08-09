@@ -1,4 +1,4 @@
-import { ItemRoom } from "./itemroom.entity";
+import { ItemRoom } from "../item_room/itemroom.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,11 +7,14 @@ import {
   OneToMany,
   BaseEntity,
 } from "typeorm";
-import { Category } from "./category.entity";
+import { Category } from "../category/category.entity";
 import { IsNotEmpty } from "class-validator";
+import { DefaultImage } from "./constants.products";
+import { DefaultDescription } from "./constants.products";
+import { DefaultFeature } from "./constants.products";
 
 @Entity("products")
-export class Item extends BaseEntity {
+export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -22,7 +25,7 @@ export class Item extends BaseEntity {
   @Column({ type: "int", nullable: false, default: 0 })
   quantity: number;
 
-  @Column("simple-array", { default: ["No image available"] }) // Product images
+  @Column("simple-array", { default: DefaultImage.default })
   images: string[];
 
   @Column({ type: "float", default: 0 })
@@ -34,10 +37,10 @@ export class Item extends BaseEntity {
   @Column({ default: 0 }) // For discounted sales or clearouts 
   discount: number; 
 
-  @Column({ nullable: false, default: "No description added" }) // Product description
+  @Column({ nullable: false, default: DefaultDescription.default }) // Product description
   description: string;
 
-  @Column("simple-array", { default: ["Features will be added soon"] }) // Product features
+  @Column("simple-array", { default: DefaultFeature.default }) // Product features
   features: string[];
 
   @Column({ type: "int", nullable: false }) // ID of the user/admin who added this product

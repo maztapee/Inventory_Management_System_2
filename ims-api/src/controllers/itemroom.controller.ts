@@ -1,7 +1,7 @@
-import { ItemRoom } from "./../entities/itemroom.entity";
+import { ItemRoom } from "../entities/item_room/itemroom.entity";
 import { Request, Response } from "express";
-import { Room } from "../entities/room.entity";
-import { Item } from "../entities/item.entity";
+import { Room } from "../entities/room/room.entity";
+import { Item } from "../entities/product/product.entity";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";
 

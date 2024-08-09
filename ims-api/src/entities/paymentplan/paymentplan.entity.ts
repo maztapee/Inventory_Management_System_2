@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from "typeorm";
-import { Sales } from "./sales.entity";
+import { Sale } from "../sales/sales.entity";
 
 @Entity("payment_plans")
 export class PaymentPlan extends BaseEntity {
@@ -28,6 +28,6 @@ export class PaymentPlan extends BaseEntity {
   })
   status: string;
 
-  @ManyToOne(() => Sales, (sales) => sales.amountPaid)
-  initialAmount: Sales;
+  @ManyToOne(() => Sale, (sales) => sales.amountPaid)
+  initialAmount: Sale;
 }

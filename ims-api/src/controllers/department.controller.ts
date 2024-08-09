@@ -1,4 +1,4 @@
-import { Department } from "../entities/department.entity";
+import { Department } from "../entities/department/department.entity";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";

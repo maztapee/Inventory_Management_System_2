@@ -1,4 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity } from "typeorm";
+import { PaymentStatus } from "./constants.payments";
 
 @Entity("payments")
 export class Payment extends BaseEntity {
@@ -16,8 +17,8 @@ export class Payment extends BaseEntity {
 
   @Column({
     type: "enum",
-    enum: ["failed", "successful"],
-    default: "successful",
+    enum:PaymentStatus,
+    default: PaymentStatus.success,
   })
   status: string;
 }

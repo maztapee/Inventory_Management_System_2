@@ -1,7 +1,7 @@
 import { IsNotEmpty, IsNumber } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column, OneToMany, BaseEntity } from "typeorm";
-import { Room } from "./room.entity";
-import { User } from "./user.entity";
+import { Room } from "../room/room.entity";
+import { User } from "../user/user.entity";
 
 @Entity()
 export class Department extends BaseEntity {

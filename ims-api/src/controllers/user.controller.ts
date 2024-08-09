@@ -1,8 +1,8 @@
 import { generateToken, verifyToken } from "./../utility/user.utils";
 import { UserPassword } from "./../enums/user.enum";
-import { User } from "./../entities/user.entity";
+import { User } from "../entities/user/user.entity";
 import { Request, Response } from "express";
-import { Department } from "../entities/department.entity";
+import { Department } from "../entities/department/department.entity";
 import { validate } from "class-validator";
 import { objToString, sendConfirmationEmail } from "../utility/user.utils";
 import { lowerCase } from "lower-case";

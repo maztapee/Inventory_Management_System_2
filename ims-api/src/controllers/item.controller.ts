@@ -1,6 +1,6 @@
-import { Item } from "./../entities/item.entity";
+import { Item } from "../entities/product/product.entity";
 import { Request, Response } from "express";
-import { Category } from "../entities/category.entity";
+import { Category } from "../entities/category/category.entity";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";
 

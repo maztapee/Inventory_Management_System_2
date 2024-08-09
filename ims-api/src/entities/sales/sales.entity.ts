@@ -1,16 +1,17 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, BaseEntity } from "typeorm";
-import { Item } from "./item.entity";
-import { User } from "./user.entity";
-import { Customer } from "./customers.entity";
-import { PaymentPlan } from "./paymentplan.entity";
+import { Product} from "../product/product.entity";
+import { User } from "../user/user.entity";
+import { Customer } from "../customer/customers.entity";
+import { SalesStatus } from "../sales/constants.sales";
+// import { PaymentPlan } from "../paymentplan/paymentplan.entity";
 
 @Entity("sales")
 export class Sale extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @ManyToOne(() => Item, (product) => product.id)
-  product: Item;
+  @ManyToOne(() => Product, (product) => product.id)
+  product: Product;
 
   @ManyToOne(() => User, (user) => user.id)
   salesPerson: User;
@@ -23,8 +24,8 @@ export class Sale extends BaseEntity {
 
   @Column({
     type: "enum",
-    enum: ["complete", "active", "canceled", "defaulted"],
-    default: "active",
+    enum: SalesStatus,
+    default: SalesStatus.active,
   })
   status: string;
 

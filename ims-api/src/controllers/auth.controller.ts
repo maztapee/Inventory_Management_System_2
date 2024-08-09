@@ -1,5 +1,5 @@
 import * as bcrypt from "bcrypt";
-import { User } from "./../entities/user.entity";
+import { User } from "../entities/user/user.entity";
 import { Request, Response } from "express";
 import {
   sendConfirmationEmail,
