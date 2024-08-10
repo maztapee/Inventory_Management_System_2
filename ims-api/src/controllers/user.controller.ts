@@ -1,5 +1,5 @@
 import { generateToken, verifyToken } from "./../utility/user.utils";
-import { UserPassword } from "./../enums/user.enum";
+import { UserPassword } from "../entities/user/constants.user";
 import { User } from "../entities/user/user.entity";
 import { Request, Response } from "express";
 import { Department } from "../entities/department/department.entity";

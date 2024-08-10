@@ -1,4 +1,4 @@
-import { UserRole } from "./../enums/user.enum";
+import { UserRole } from "../entities/user/constants.user";
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 

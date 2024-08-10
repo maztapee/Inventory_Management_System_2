@@ -4,7 +4,7 @@ import { User } from "../entities/user/user.entity";
 import { DataSource } from "typeorm";
 import { Department } from "../entities/department/department.entity";
 import { Room } from "../entities/room/room.entity";
-import { Item } from "../entities/product/product.entity";
+import { Product } from "../entities/product/product.entity";
 import {Locations} from "../entities/locations/locations.entity";
 import {Customer} from "../entities/customer/customers.entity";
 import {PaymentPlan} from "../entities/paymentplan/paymentplan.entity";
@@ -22,7 +22,7 @@ export const Database = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Department, Room, Item, Category, ItemRoom, Locations,Customer, PaymentPlan,Payment, Sale],
+  entities: [User, Department, Room, Product, Category, ItemRoom, Locations,Customer, PaymentPlan,Payment, Sale],
   migrations: [/*...*/],
   migrationsTableName: "custom_migration_table",
 

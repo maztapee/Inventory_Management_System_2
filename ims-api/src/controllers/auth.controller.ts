@@ -9,7 +9,7 @@ import {
   sendPasswordResetEmail,
 } from "../utility/user.utils";
 
-import { UserStatus } from "../enums/user.enum";
+import { UserStatus } from "../entities/user/constants.user";
 import { validate } from "class-validator";
 import { lowerCase } from "lower-case";
 
@@ -65,6 +65,11 @@ export const register = async (req: Request, res: Response) => {
       message: `User with phone ${phone} already exist`,
     });
   }
+
+  //TODO:
+  //Should we make username UNIQUE?
+  
+
   try {
     const newUser = new User();
     newUser.username = lowerCase(username);

@@ -1,14 +1,14 @@
 import { ItemRoom } from "../entities/item_room/itemroom.entity";
 import { Request, Response } from "express";
 import { Room } from "../entities/room/room.entity";
-import { Item } from "../entities/product/product.entity";
+import { Product } from "../entities/product/product.entity";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";
 
 export const createItemRoom = async (req: Request, res: Response) => {
     const{itemId,roomId,numberOfItem}=req.body as any;
     const exist = await ItemRoom.findOne({ where: { itemId, roomId } });
-    const item = await Item.findOne({ where: { id:itemId } });
+    const item = await Product.findOne({ where: { id:itemId } });
     const room = await Room.findOne({ where: { id:roomId } });
     if(!item){
         return res.status(400).json({

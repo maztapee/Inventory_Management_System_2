@@ -1,4 +1,4 @@
-import { Item } from "../entities/product/product.entity";
+import { Product } from "../entities/product/product.entity";
 import { Request, Response } from "express";
 import { Category } from "../entities/category/category.entity";
 import { validate } from "class-validator";
@@ -7,7 +7,7 @@ import { objToString } from "../utility/user.utils";
 export const createItem = async (req: Request, res: Response) => {
   //const {name} = req.params as any;
   const { categoryId, name } = req.body as any;
-  const exist = await Item.findOne({ where: { name } });
+  const exist = await Product.findOne({ where: { name } });
   const category = await Category.findOne({ where: { id: categoryId } });
   if (!category) {
     return res.status(400).json({
@@ -20,7 +20,7 @@ export const createItem = async (req: Request, res: Response) => {
   //   });
   // }
   try {
-    const item = new Item();
+    const item = new Product();
     item.name = name;
     item.category = categoryId;
     validate(item).then(async (errors) => {
@@ -45,7 +45,7 @@ export const createItem = async (req: Request, res: Response) => {
 };
 export const deleteItem = async (req: Request, res: Response) => {
   const { name } = req.params as any;
-  const item = await Item.findOne({ where: { name } });
+  const item = await Product.findOne({ where: { name } });
   if (!item) {
     return res.status(400).json({
       message: `item with name ${name} not found`,
@@ -66,7 +66,7 @@ export const deleteItem = async (req: Request, res: Response) => {
 export const updateItem = async (req: Request, res: Response) => {
   const { id } = req.params as any;
   const { categoryId, name } = req.body as any;
-  const item = await Item.findOne({ where: { id } });
+  const item = await Product.findOne({ where: { id } });
   const category = await Category.findOne({ where: { id: categoryId } });
   if (!item) {
     return res.status(400).json({
@@ -94,7 +94,7 @@ export const updateItem = async (req: Request, res: Response) => {
 };
 export const searchItem = async (req: Request, res: Response) => {
   const { name } = req.params as any;
-  const item = await Item.find({ where: { name } });
+  const item = await Product.find({ where: { name } });
   if (!item) {
     return res.status(400).json({
       message: `item with name ${name} not found`,
@@ -113,7 +113,7 @@ export const searchItem = async (req: Request, res: Response) => {
 };
 export const SearchItemById = async (req: Request, res: Response) => {
   const { id } = req.params as any;
-  const item = await Item.findOne({
+  const item = await Product.findOne({
     where: { id },
     relations: { category: true },
     loadRelationIds: true,
@@ -136,7 +136,7 @@ export const SearchItemById = async (req: Request, res: Response) => {
 };
 export const deleteItembyid = async (req: Request, res: Response) => {
   const { id } = req.params as any;
-  const item = await Item.findOne({
+  const item = await Product.findOne({
     where: { id },
     relations: { category: true, itemRoom: true },
     loadRelationIds: true,
@@ -165,7 +165,7 @@ export const deleteItembyid = async (req: Request, res: Response) => {
 };
 export const updateCategorybyItem = async (req: Request, res: Response) => {
   const { name, categoryId } = req.params as any;
-  const item = await Item.findOne({ where: { name } });
+  const item = await Product.findOne({ where: { name } });
   if (!item) {
     return res.status(400).json({
       message: `item with name ${name} not found`,
@@ -192,8 +192,10 @@ export const updateCategorybyItem = async (req: Request, res: Response) => {
   }
 };
 export const getAllItem = async (req: Request, res: Response) => {
-  const item = await Item.find({ relations: { category: true } });
-  if (!item) {
+  // console.log(typeof req, "Request Received");
+  const item = await Product.find({ relations: { category: true } });
+  console.log(item[0], "item first index");
+  if (!item.length) {
     return res.status(400).json({
       message: `not found any item`,
     });
