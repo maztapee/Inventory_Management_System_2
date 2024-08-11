@@ -8,10 +8,13 @@ import {
   deleteItembyid,
   getAllItem,updateCategorybyItem
 } from "../controllers/product.controller";
+import { isAdmin } from "../middlewares/user.middleware";
+
+
 export const ProductRouter: Router = Router({
   strict: true,
 });
-ProductRouter.post("/", createItem);
+ProductRouter.post("/", isAdmin, createItem);
 ProductRouter.put("/:name", updateItem);
 ProductRouter.delete("/", deleteItem);
 ProductRouter.get("/:id", SearchItemById);

@@ -44,6 +44,7 @@ export class Product extends BaseEntity {
   features: string[];
 
   @Column({ type: "int", nullable: false }) // ID of the user/admin who added this product
+  //TODO: Define the relationship with user currently logged in
   addedBy: number;
 
   @ManyToOne(() => Category, (Category) => Category.item, {

@@ -25,6 +25,7 @@ export const login = async (req: Request, res: Response) => {
     const token = await generateToken({
       username: user.username,
       email: user.email,
+      id: user.id,
     });
     await sendConfirmationEmail(user.username, user.email, token);
     res.status(400).json({
@@ -89,6 +90,7 @@ export const register = async (req: Request, res: Response) => {
           email: newUser.email,
           password: newUser.password,
           phone: newUser.phone,
+          id: newUser.id,
         });
         sendConfirmationEmail(newUser.username, newUser.email, token);
         await newUser.save();
@@ -178,6 +180,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
             username: user.username,
             email: user.email,
             newPassword: newPassword,
+            id: user.id,
           });
           await sendPasswordResetEmail(user.username, user.email, token);
           return res.status(200).json({
