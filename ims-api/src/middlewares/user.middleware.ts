@@ -8,6 +8,7 @@ interface LoggedUser {
   email: string,
   phone: string,
   id: number,
+  role: number,
 }
 
 declare global {

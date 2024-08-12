@@ -194,6 +194,8 @@ export const createUser = async (req: Request, res: Response) => {
   const userEmail = await User.findOne({ where: { email } });
   const userPhone = await User.findOne({ where: { phone } });
   const department = await Department.findOne({ where: { id: departmentId } });
+  //TODO:
+  // At what point do we assign new users their roles if they use same sign up process?
   if (userEmail) {
     return res.status(400).json({
       message: `User with email ${email} already exist`,

@@ -1,5 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, ManyToOne } from "typeorm";
+import { 
+  Entity, 
+  PrimaryGeneratedColumn, 
+  Column, 
+  BaseEntity, 
+  ManyToOne ,
+  OneToOne
+} from "typeorm";
 import { Sale } from "../sales/sales.entity";
+import { Customer } from "../customer/customers.entity";
 
 @Entity("payment_plans")
 export class PaymentPlan extends BaseEntity {
@@ -30,4 +38,7 @@ export class PaymentPlan extends BaseEntity {
 
   @ManyToOne(() => Sale, (sales) => sales.amountPaid)
   initialAmount: Sale;
+
+  @OneToOne(() => Customer, (customer) => customer.paymentPlan)
+  customer: Customer;
 }

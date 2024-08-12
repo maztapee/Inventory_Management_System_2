@@ -26,6 +26,9 @@ export class User extends BaseEntity {
   @Generated("uuid")
   userId: string;
 
+  //TODO:
+  //Should we implement full name of users (Admin and Salesperson)
+
   @Column()
   @IsNotEmpty({
     message: UserMessages.enter_username,
