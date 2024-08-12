@@ -32,7 +32,7 @@ export function objToString(obj: any) {
 
 export const generateToken = async (user: any) => {
   const token = jwt.sign(user, process.env.JWT_SECRET as string, {
-    expiresIn: "30m",
+    expiresIn: "24h",
   });
   return token;
 };

@@ -1,5 +1,5 @@
-import { Department } from "./department.entity";
-import { Room } from "./room.entity";
+import { Department } from "../department/department.entity";
+import { Room } from "../room/room.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -11,12 +11,13 @@ import {
   OneToOne,
   BeforeInsert,
 } from "typeorm";
-import { UserStatus, UserRole } from "../enums/user.enum";
+import { UserStatus, UserRole, UserMessages } from "../user/constants.user";
 import * as bcrypt from "bcrypt";
 
 import { IsNotEmpty, IsEmail, Matches, IsPhoneNumber } from "class-validator";
 
-@Entity()
+@Entity()                 
+// TODO: Rename table to users and other tables names in plural forms
 export class User extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -25,33 +26,35 @@ export class User extends BaseEntity {
   @Generated("uuid")
   userId: string;
 
+  //TODO:
+  //Should we implement full name of users (Admin and Salesperson)
+
   @Column()
   @IsNotEmpty({
-    message: "please enter username",
+    message: UserMessages.enter_username,
   })
   username: string;
 
   @Column({ unique: true })
   @IsNotEmpty({
-    message: "please enter email",
+    message: UserMessages.enter_email,
   })
   @IsEmail()
   email: string;
 
   @Column()
   @IsNotEmpty({
-    message: "please enter password",
+    message: UserMessages.enter_password,
   })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,20}$/, {
-    message:
-      "Password must contain uppercase and lowercase characters, minimum character length 8, maximum 20",
+    message: UserMessages.password_strength,
   })
   password: string;
 
   @Column({ unique: true })
   @IsPhoneNumber()
   @IsNotEmpty({
-    message: "please enter phone number",
+    message: UserMessages.enter_phone_number,
   })
   phone: string;
 

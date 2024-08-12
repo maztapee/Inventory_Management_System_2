@@ -1,4 +1,4 @@
-import { ItemRoom } from "./itemroom.entity";
+import { ItemRoom } from "../item_room/itemroom.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -10,8 +10,8 @@ import {
   BaseEntity,
 } from "typeorm";
 import { IsNotEmpty } from "class-validator";
-import { Department } from "./department.entity";
-import { User } from "./user.entity";
+import { Department } from "../department/department.entity";
+import { User } from "../user/user.entity";
 
 @Entity()
 export class Room extends BaseEntity {

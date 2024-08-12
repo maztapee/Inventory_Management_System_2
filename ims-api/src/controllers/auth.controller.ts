@@ -1,5 +1,5 @@
 import * as bcrypt from "bcrypt";
-import { User } from "./../entities/user.entity";
+import { User } from "../entities/user/user.entity";
 import { Request, Response } from "express";
 import {
   sendConfirmationEmail,
@@ -9,7 +9,7 @@ import {
   sendPasswordResetEmail,
 } from "../utility/user.utils";
 
-import { UserStatus } from "../enums/user.enum";
+import { UserStatus } from "../entities/user/constants.user";
 import { validate } from "class-validator";
 import { lowerCase } from "lower-case";
 
@@ -25,6 +25,7 @@ export const login = async (req: Request, res: Response) => {
     const token = await generateToken({
       username: user.username,
       email: user.email,
+      id: user.id,
     });
     await sendConfirmationEmail(user.username, user.email, token);
     res.status(400).json({
@@ -65,6 +66,11 @@ export const register = async (req: Request, res: Response) => {
       message: `User with phone ${phone} already exist`,
     });
   }
+
+  //TODO:
+  //Should we make username UNIQUE?
+  
+
   try {
     const newUser = new User();
     newUser.username = lowerCase(username);
@@ -84,6 +90,7 @@ export const register = async (req: Request, res: Response) => {
           email: newUser.email,
           password: newUser.password,
           phone: newUser.phone,
+          id: newUser.id,
         });
         sendConfirmationEmail(newUser.username, newUser.email, token);
         await newUser.save();
@@ -173,6 +180,7 @@ export const forgotPassword = async (req: Request, res: Response) => {
             username: user.username,
             email: user.email,
             newPassword: newPassword,
+            id: user.id,
           });
           await sendPasswordResetEmail(user.username, user.email, token);
           return res.status(200).json({

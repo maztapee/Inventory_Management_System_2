@@ -6,7 +6,7 @@ import {
   OneToMany,
   BaseEntity,
 } from "typeorm";
-import { Item } from "./item.entity";
+import { Product } from "../product/product.entity";
 
 @Entity()
 export class Category extends BaseEntity {
@@ -21,6 +21,6 @@ export class Category extends BaseEntity {
   @IsNotEmpty()
   subClassification: string;
 
-  @OneToMany(() => Item, (item) => item.category)
-  item: Item[];
+  @OneToMany(() => Product, (item) => item.category)
+  item: Product[];
 }

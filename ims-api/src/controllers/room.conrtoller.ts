@@ -1,6 +1,6 @@
-import { Room } from "../entities/room.entity";
-import { User } from "./../entities/user.entity";
-import { Department } from "../entities/department.entity";
+import { Room } from "../entities/room/room.entity";
+import { User } from "../entities/user/user.entity";
+import { Department } from "../entities/department/department.entity";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";

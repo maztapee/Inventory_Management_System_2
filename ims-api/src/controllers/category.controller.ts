@@ -1,4 +1,4 @@
-import { Category } from "./../entities/category.entity";
+import { Category } from "../entities/category/category.entity";
 import { Request, Response } from "express";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";

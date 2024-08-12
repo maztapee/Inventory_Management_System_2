@@ -1,5 +1,5 @@
-import { Room } from "./room.entity";
-import { Item } from "./item.entity";
+import { Room } from "../room/room.entity";
+import { Product } from "../product/product.entity";
 import { Entity, Column, ManyToOne, PrimaryColumn, BaseEntity } from "typeorm";
 
 @Entity()
@@ -13,8 +13,8 @@ export class ItemRoom extends BaseEntity {
   @Column()
   numberOfItem: number;
 
-  @ManyToOne(() => Item, (item) => item.itemRoom)
-  item: Item;
+  @ManyToOne(() => Product, (item) => item.itemRoom)
+  item: Product;
 
   @ManyToOne(() => Room, (room) => room.itemRoom)
   room: Room;
