@@ -14,20 +14,20 @@ export class PaymentPlan extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+  @Column({ type: "int", nullable: false })
+  createdAt: Date; // months only (for now)
+
   @Column({ type: "float", nullable: false })
-  minimumDeposit: number;
+  minimumDeposit: number; //percentage of total amount acceptable as initial payment for a payment plan
 
   @Column({ type: "int", nullable: false })
-  minDuration: number; // In days, weeks, or months
-
-  @Column({ type: "int", nullable: false })
-  maxDuration: number; // In days, weeks, or months
+  duration: number; // months only (for now)
 
   @Column({ type: "float", nullable: false })
   priceIncrement: number; // Percentage increase
 
   @Column({ type: "float", nullable: false })
-  defaultingFee: number;
+  defaultingFee: number; //Percentage of total amount to be paid 
 
   @Column({
     type: "enum",

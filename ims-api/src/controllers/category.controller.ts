@@ -210,7 +210,7 @@ export const getMainOfCategory = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: `failed on get specific category`,
+      message: `failed to get specified category`,
       err: error,
     });
   }

@@ -22,7 +22,7 @@ export const Database = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Department, Room, Product, Category, ItemRoom, Locations,Customer, PaymentPlan,Payment, Sale],
+  entities: [User, Department, Room, Product, Category, ItemRoom, Locations, Customer, PaymentPlan,Payment, Sale],
   migrations: [/*...*/],
   migrationsTableName: "custom_migration_table",
 
