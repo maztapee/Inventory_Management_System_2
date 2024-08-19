@@ -1,4 +1,3 @@
-import { ItemRoom } from "../item_room/itemroom.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -51,10 +50,4 @@ export class Product extends BaseEntity {
     onDelete: "SET NULL",
   })
   category: Category;
-
-  @OneToMany(() => ItemRoom, (itemRoom) => itemRoom.item)
-  itemRoom: ItemRoom[];
 }
-
-
-//NOTE: Item entity is created to represents product. Will change to product across code base in the future

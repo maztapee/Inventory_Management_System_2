@@ -126,7 +126,6 @@ export const confirmUser = async (req: Request, res: Response) => {
       newUser.email = email;
       newUser.password = password;
       newUser.phone = phone;
-      newUser.department = department || null;
       newUser.confirmed = UserStatus.VERIFIED;
 
       await newUser.save();

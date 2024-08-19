@@ -1,5 +1,5 @@
-import { Product } from "../entities/product/product.entity";
 import { Request, Response } from "express";
+import { Product } from "../entities/product/product.entity";
 import { Category } from "../entities/category/category.entity";
 import { validate } from "class-validator";
 import { objToString } from "../utility/user.utils";
@@ -41,42 +41,46 @@ export const createItem = async (req: Request, res: Response) => {
   }
 };
 export const deleteItem = async (req: Request, res: Response) => {
-  const { name } = req.params as any;
-  const product = await Product.findOne({ where: { name } });
+  const { productId } = req.params as any;
+  const product = await Product.findOne({ 
+    where: { 
+      id: productId 
+    } 
+  });
   if (!product) {
     return res.status(400).json({
-      message: `item with name ${name} not found`,
+      message: `No product found`,
     });
   }
   try {
     product.remove();
     res.status(201).json({
-      message: "item deleted successfully",
+      message: "Product deleted successfully",
     });
   } catch (error) {
     res.status(500).json({
-      message: "item deleted failed",
+      message: "Product deletion failed",
       err: error,
     });
   }
 };
 export const updateItem = async (req: Request, res: Response) => {
   const { id } = req.params as any;
-  const { categoryId, name, quantity } = req.body as any;
+  const { categoryId, newname, quantity } = req.body as any;
   const product = await Product.findOne({ where: { id } });
   const category = await Category.findOne({ where: { id: categoryId } });
   if (!product) {
     return res.status(400).json({
-      message: `item with id ${id} not found`,
+      message: `Product with ID ${id} not found`,
     });
   }
   if (!category) {
     return res.status(400).json({
-      message: `category with id ${categoryId} not found`,
+      message: `category with ID: ${categoryId} not found`,
     });
   }
   try {
-    product.name = name;
+    product.name = newname;
     product.category = categoryId;
     product.quantity = parseInt(quantity);
     await product.save();
@@ -118,7 +122,7 @@ export const SearchItemById = async (req: Request, res: Response) => {
   });
   if (!product) {
     return res.status(400).json({
-      message: `item with this id ${id} not found`,
+      message: `Product with this id ${id} not found`,
     });
   }
   try {
@@ -127,7 +131,7 @@ export const SearchItemById = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "  Failed to search for item by id",
+      message: "  Failed to search for Product by id",
       err: error,
     });
   }
@@ -136,7 +140,7 @@ export const deleteItembyid = async (req: Request, res: Response) => {
   const { id } = req.params as any;
   const product = await Product.findOne({
     where: { id },
-    relations: { category: true, itemRoom: true },
+    relations: { category: true },
     loadRelationIds: true,
   });
   if (!product) {
@@ -144,19 +148,17 @@ export const deleteItembyid = async (req: Request, res: Response) => {
       message: `item with id ${id} not found`,
     });
   }
-  if(product.itemRoom.length>0){
-    return res.status(400).json({
-      message: `item with id ${id} already in room`,
-    });
-  }
+  if(product)
   try {
-    product.remove();
-    res.status(201).json({
-      message: "item delete successfully",
-    });
+    {
+      product.remove();
+      return res.status(400).json({
+        message: `Product deleted successfully`,
+      });
+    }
   } catch (error) {
     res.status(500).json({
-      message: "item delete failed",
+      message: "Product delete failed",
       err: error,
     });
   }
@@ -166,7 +168,7 @@ export const updateCategorybyItem = async (req: Request, res: Response) => {
   const product = await Product.findOne({ where: { name } });
   if (!product) {
     return res.status(400).json({
-      message: `item with name ${name} not found`,
+      message: `Product with name ${name} not found`,
     });
   }
   const category = await Category.findOne({ where: { id: categoryId } });
@@ -180,11 +182,11 @@ export const updateCategorybyItem = async (req: Request, res: Response) => {
     product.category = category;
     await product.save();
     res.status(201).json({
-      message: "item update successfully",
+      message: "Product update successfully",
     });
   } catch (error) {
     res.status(500).json({
-      message: "item update failed",
+      message: "Product update failed",
       err: error,
     });
   }
@@ -202,7 +204,7 @@ export const getAllItem = async (req: Request, res: Response) => {
     });
   } catch (error) {
     res.status(500).json({
-      message: "  Failed to search for item",
+      message: "  Failed to search for products",
       err: error,
     });
   }

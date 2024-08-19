@@ -1,5 +1,3 @@
-import { Department } from "../department/department.entity";
-import { Room } from "../room/room.entity";
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -7,8 +5,6 @@ import {
   Column,
   Generated,
   UpdateDateColumn,
-  ManyToOne,
-  OneToOne,
   BeforeInsert,
 } from "typeorm";
 import { UserStatus, UserRole, UserMessages } from "../user/constants.user";
@@ -69,14 +65,6 @@ export class User extends BaseEntity {
 
   @UpdateDateColumn()
   updatedAt: Date;
-
-  @OneToOne(() => Room, (room) => room.user)
-  room: Room;
-
-  @ManyToOne(() => Department, (department) => department.user, {
-    onDelete: "SET NULL",
-  })
-  department: Department;
 
   @BeforeInsert()
   async hashPassword() {

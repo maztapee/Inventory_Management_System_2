@@ -2,15 +2,14 @@ import { isAdmin, isLoggedIn } from "./middlewares/user.middleware";
 import express, { Application } from "express";
 import cors from "cors";
 import morgan from "morgan";
-
-import { RoomRouter } from "./routes/room.routes";
-import { DepartmentRouter } from "./routes/department.routes";
 import { AuthRouter } from "./routes/auth.routes";
 import { UserRouter } from "./routes/user.routes";
 import { ProductRouter } from "./routes/product.routes";
 import { CategoryRouter } from "./routes/category.routes";
-import { ItemRoomRouter } from "./routes/itemroom.routes";
 import { CustomerRouter } from "./routes/customer.routes";
+import { SaleRouter } from "./routes/sale.routes";
+import { OrderRouter } from "./routes/order.routes";
+import { PaymentPlanRouter } from "./routes/paymentplan.routes";
 
 const app: Application = express();
 
@@ -32,9 +31,9 @@ app.use(`${BASE_URL}/user`, isLoggedIn, isAdmin, UserRouter);
 app.use(`${BASE_URL}/customer`, isLoggedIn, CustomerRouter);
 app.use(`${BASE_URL}/category`, isLoggedIn, CategoryRouter);
 app.use(`${BASE_URL}/product`, isLoggedIn, ProductRouter);
-// app.use(`${BASE_URL}/department`, isLoggedIn, isAdmin, DepartmentRouter);
-// app.use(`${BASE_URL}/room`, isLoggedIn, RoomRouter);
-// app.use(`${BASE_URL}/itemroom`, isLoggedIn, ItemRoomRouter);
+app.use(`${BASE_URL}/order`, isLoggedIn, OrderRouter);
+app.use(`${BASE_URL}/sale`, isLoggedIn, SaleRouter);
+app.use(`${BASE_URL}/payment-plan`, isLoggedIn, PaymentPlanRouter);
 
 
 export default app;

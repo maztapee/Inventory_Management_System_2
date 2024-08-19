@@ -2,7 +2,6 @@ import { generateToken, verifyToken } from "./../utility/user.utils";
 import { UserPassword } from "../entities/user/constants.user";
 import { User } from "../entities/user/user.entity";
 import { Request, Response } from "express";
-import { Department } from "../entities/department/department.entity";
 import { validate } from "class-validator";
 import { objToString, sendConfirmationEmail } from "../utility/user.utils";
 import { lowerCase } from "lower-case";
@@ -33,8 +32,6 @@ export const SearchById = async (req: Request, res: Response) => {
   const user = await User.findOne({
     select: ["id", "username", "email", "phone"],
     where: { id },
-    relations: { department: true },
-    loadRelationIds: true,
   });
   if (!user) {
     return res.status(400).json({
@@ -136,8 +133,8 @@ export const deleteUser = async (req: Request, res: Response) => {
 
 export const Updateuser = async (req: Request, res: Response) => {
   const { id } = req.params as any;
-  const { username, email, phone, departmentId } = req.body;
-  const department = await Department.findOne({ where: { id: departmentId } });
+  const { username, email, phone, userId } = req.body;
+  const department = await User.findOne({ where: { id: userId } });
   const user = await User.findOne({ where: { id } });
   if (!user) {
     return res.status(400).json({
@@ -146,14 +143,13 @@ export const Updateuser = async (req: Request, res: Response) => {
   }
   if (!department) {
     return res.status(400).json({
-      message: `department with id ${departmentId} not found`,
+      message: `department with id ${userId} not found`,
     });
   }
   try {
     user.username = username;
     user.email = email;
     user.phone = phone;
-    user.department = department;
     await user.save();
     res.status(201).json({
       message: "user update successfully",
@@ -169,8 +165,6 @@ export const Updateuser = async (req: Request, res: Response) => {
 export const getAllUser = async (req: Request, res: Response) => {
   const user = await User.find({
     select: ["id", "username", "email", "phone", "role"],
-    relations: { department: true },
-    loadRelationIds: true,
   });
   if (!user) {
     return res.status(400).json({
@@ -193,7 +187,6 @@ export const createUser = async (req: Request, res: Response) => {
   const { username, email, phone, departmentId } = req.body;
   const userEmail = await User.findOne({ where: { email } });
   const userPhone = await User.findOne({ where: { phone } });
-  const department = await Department.findOne({ where: { id: departmentId } });
   //TODO:
   // At what point do we assign new users their roles if they use same sign up process?
   if (userEmail) {
@@ -206,18 +199,12 @@ export const createUser = async (req: Request, res: Response) => {
       message: `User with phone ${phone} already exist`,
     });
   }
-  if (!department) {
-    return res.status(400).json({
-      message: `department with id ${departmentId} not found`,
-    });
-  }
   try {
     const newUser = new User();
     newUser.username = lowerCase(username);
     newUser.email = lowerCase(email);
     newUser.password = UserPassword.default;
     newUser.phone = phone;
-    newUser.department = department;
 
     validate(newUser).then(async (errors) => {
       if (errors.length > 0) {
@@ -231,7 +218,6 @@ export const createUser = async (req: Request, res: Response) => {
           email: newUser.email,
           password: newUser.password,
           phone: newUser.phone,
-          department: newUser.department,
         });
         await sendConfirmationEmail(newUser.username, newUser.email, token);
         return res.status(201).json({
